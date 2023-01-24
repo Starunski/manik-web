@@ -22,7 +22,7 @@ const Stack = createNativeStackNavigator();
 
 export default function App() {
   const [user, setUser] = useState("");
-  console.log("useruseruseruseruser !!!", user);
+  console.log("useruseruseruseruser test !", user);
 
   useEffect(() => {
     if (app) {
