@@ -6,7 +6,15 @@
     "start": "expo start",
     "android": "expo start --android",
     "ios": "expo start --ios",
-    "web": "expo start --web"
+    "web": "expo start --web",
+    "build:storybook": "node ./scripts/storybook.js",
+    "test:unit": "react-scripts test",
+    "test:e2e": "node ./scripts/e2e.test.js",
+    "lint": "node ./scripts/eslint.js",
+    "type:check": "node ./scripts/typecheck.js",
+    "i18n:check": "node ./scripts/i18n-check.js",
+    "postinstall": "npm run build",
+    "build": "rimraf dist && tsc"
   },
   "dependencies": {
     "@eva-design/eva": "^2.1.1",
