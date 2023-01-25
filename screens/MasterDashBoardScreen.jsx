@@ -15,10 +15,10 @@ export const MasterDashBoardScreen = (props) => {
       <Text category="h6">MasterDashBoardScreen</Text>
 
       {/* <Calendar date={date} onSelect={(nextDate) => setDate(nextDate)} /> */}
-      <Button
+      {/* <Button
         title="Approve"
         onPress={() => props.navigation.navigate("HomeScreen")}
-      />
+      /> */}
     </View>
   );
 };

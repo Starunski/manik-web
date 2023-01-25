@@ -11,11 +11,28 @@ import { StyleSheet, View } from "react-native";
 import { EvaIconsPack } from "@ui-kitten/eva-icons";
 import { app, db, readUserData } from "../firebase";
 import { useAuth } from "../providers/auth-provider";
+import {
+  getAuth,
+  createUserWithEmailAndPassword,
+  signInWithEmailAndPassword,
+  signOut,
+  updateProfile,
+} from "firebase/auth";
 
 export const HomeScreen = (props) => {
-  const FacebookIcon = (props) => <Icon name="facebook" {...props} />;
+  const auth = getAuth(app);
+  const MasterIcon = (props) => <Icon name="person-outline" {...props} />;
+  const CustomerIcon = (props) => <Icon name="edit-outline" {...props} />;
   const { user } = useAuth();
 
+  const handleSingOut = async () => {
+    try {
+      await signOut(auth);
+      alert(" User is logged out");
+    } catch (error) {
+      alert(error.message);
+    }
+  };
 
   return (
     <View style={{ flex: 1, alignItems: "center", justifyContent: "center" }}>
@@ -32,16 +49,28 @@ export const HomeScreen = (props) => {
           <Text>not login </Text>
         )}
       </View>
-      <Button onPress={() => readUserData()}>read data</Button>
-      <Button
-        accessoryLeft={FacebookIcon}
-        onPress={() => props.navigation.navigate("LoginScreen")}
-      >
-        I am master
-      </Button>
-      <Button onPress={() => props.navigation.navigate("CustomerScreen")}>
-        I am looking some master
-      </Button>
+      {!user ? (
+        <View>
+          <Button
+            accessoryLeft={MasterIcon}
+            onPress={() => props.navigation.navigate("LoginScreen")}
+          >
+            I am master
+          </Button>
+          <Button
+            accessoryLeft={CustomerIcon}
+            onPress={() => props.navigation.navigate("LoginScreen")}
+          >
+            I am customer and looking master
+          </Button>
+        </View>
+      ) : (
+        <View>
+          <Button onPress={handleSingOut}>LogOut</Button>
+        </View>
+      )}
+
+      {/* <Button onPress={() => readUserData()}>read data</Button> */}
 
       {/* <Button title="Go back" onPress={() => props.navigation.goBack()} /> */}
     </View>

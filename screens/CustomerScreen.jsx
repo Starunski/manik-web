@@ -1,4 +1,4 @@
-import { Button, StyleSheet, Text, View } from "react-native";
+import { Button, StyleSheet, Text, View, SafeAreaView } from "react-native";
 import React, { useState } from "react";
 import {
   IndexPath,
@@ -6,6 +6,7 @@ import {
   Select,
   SelectItem,
   Input,
+  Avatar,
 } from "@ui-kitten/components";
 import { SelectSimple } from "../components/SelectSimple";
 import { readUserData, onRemoveChild } from "../firebase";
@@ -20,54 +21,81 @@ import { readUserData, onRemoveChild } from "../firebase";
 export const CustomerScreen = (props) => {
   const [city, setCity] = useState("");
   const [data, setData] = useState([]);
-  console.log("=======================data=============", data);
 
-  const getData = async () => {
-    try {
-      const res = await readUserData();
-      console.log("====================================");
-      console.log("res", res);
-      setData(res);
-      console.log("====================================");
-    } catch (error) {
-      alert('ERROR', error.message);
-    }
-  };
+  // const getData = async () => {
+  //   try {
+  //     const res = await readUserData();
+  //     console.log("res", res);
+  //     setData(res);
+  //   } catch (error) {
+  //     alert("ERROR", error.message);
+  //   }
+  // };
 
   return (
-    <Layout style={styles.container} level="1">
+    <SafeAreaView style={styles.container}>
       {/* <View style={{ flex: 1, alignItems: "center", justifyContent: "center" }}> */}
-      <Text>LOGO</Text>
-      <SelectSimple />
-      <Input
-        placeholder="search"
-        value={city}
-        onChangeText={(nextValue) => setCity(nextValue)}
-      />
+      <View
+        style={{
+          display: "flex",
+          justifyContent: "center",
+          alignItems: "center",
+          width: "100%",
+          padding: 20,
+        }}
+      >
+        <Avatar source={require("../assets/photo.png")} />
+      </View>
+
+      <View
+        style={{
+          width: "100%",
+        }}
+      >
+        <SelectSimple />
+        <Input
+          placeholder="search"
+          value={city}
+          onChangeText={(nextValue) => setCity(nextValue)}
+        />
+      </View>
+
       {/* <Mapbox /> */}
       {/* <MapboxGL.MapView style={styles.map} />; */}
       {/* <Text>search price </Text>
       <Text>search rating </Text> */}
       {/* <Text>search level </Text> */}
 
-      <Button onPress={() => getData()} title="get data" />
+      <View
+        style={{
+          display: "flex",
+          justifyContent: "center",
+          alignItems: "center",
+        }}
+      >
+        <Button onPress={() => getData()} title="get data" />
 
-      <Button onPress={() => onRemoveChild('1')} title="remove" />
+        <Button onPress={() => onRemoveChild("1")} title="remove" />
 
+        <Button
+          title="NEXT"
+          onPress={() => props.navigation.navigate("CustomerScreen2")}
+        />
+      </View>
 
-
-      <Button
-        title="NEXT"
-        onPress={() => props.navigation.navigate("CustomerScreen2")}
-      />
       <Text> {data} </Text>
       {/* </View> */}
-    </Layout>
+    </SafeAreaView>
   );
 };
 
 const styles = StyleSheet.create({
   container: {
-    minHeight: 128,
+    // minHeight: 128,
+    display: "flex",
+    flexDirection: "column",
+    justifyContent: "center",
+    alignItems: "center",
+    width: "100%",
   },
 });

@@ -4,7 +4,7 @@ import { IndexPath, Layout, Select, SelectItem } from "@ui-kitten/components";
 
 export const SelectSimple = () => {
   const [selectedIndex, setSelectedIndex] = useState();
-  const [data, setData] = useState([]);
+  const [data, setData] = useState(["Ira", "Ivan", "Vaisya"]);
 
   const getMasters = async () => {
     try {
@@ -19,14 +19,15 @@ export const SelectSimple = () => {
     }
   };
 
-  useEffect(() => {
-    getMasters();
-  }, []);
+  // useEffect(() => {
+  //   getMasters();
+  // }, []);
 
   return (
+    
     <Select
       placeholder={"Select master"}
-      value={data ? data[selectedIndex - 1] : undefined}
+      value={data && data[selectedIndex - 1]}
       selectedIndex={selectedIndex}
       onSelect={(index) => {
         setSelectedIndex(index);

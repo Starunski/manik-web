@@ -53,7 +53,12 @@ export default function App() {
               <Stack.Screen
                 name="HomeScreen"
                 component={screens.HomeScreen}
-                // options={{ title: "Home Screen" }}
+                options={{
+                  title: "Home Screen",
+                  headerBackButtonMenuEnabled: false,
+                  headerBackButtonVisible: false,
+                  headerShown: false,
+                }}
               />
               <Stack.Screen
                 name="MasterRegistrationScreen"
