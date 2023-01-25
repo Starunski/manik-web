@@ -32,7 +32,34 @@ export const LoginScreen = (props) => {
   const handleSingUp = async () => {
     try {
       const res = await createUserWithEmailAndPassword(auth, email, password);
-      alert(`User ${res.user.email} is created `);
+      const firebaseUser = res.user;
+      console.log("res!!!!!!!!!!!!!!!!!!!!!! firebaseUser", firebaseUser);
+
+      // const url = "https://jsonplaceholder.typicode.com/users";
+      // const url = "http://localhost:5000/api/user";
+
+      // const aa = await fetch(url);
+      // const bb = await aa.json();
+      // console.log("res.user.uid", res.user.uid);
+
+      // if (firebaseUser) {
+      //   const response = await fetch(url, {
+      //     method: "POST",
+      //     headers: {
+      //       "Content-Type": "application/json",
+      //     },
+      //     body: JSON.stringify({
+      //       name: "default_name",
+      //       surname: "default_surname",
+      //       email: `${firebaseUser.uid}`,
+      //       id: `${firebaseUser.uid}`,
+      //     }),
+      //   });
+      //   const postgresUserJson = await response.json();
+      //   console.log("postgresUserJson", postgresUserJson);
+      // }
+
+      // alert(`User ${res.user.email} is created `);
     } catch (error) {
       alert(error.message);
     }
@@ -56,16 +83,25 @@ export const LoginScreen = (props) => {
     }
   };
 
-  const handleUpdateUser = async () => {
-    try {
-      await updateProfile(auth.currentUser, {
-        displayName: update,
-      });
-      alert(" User is updated");
-    } catch (error) {
-      alert(error.message);
+  // const handleUpdateUser = async () => {
+  //   try {
+  //     await updateProfile(auth.currentUser, {
+  //       displayName: update,
+  //     });
+  //     alert(" User is updated");
+  //   } catch (error) {
+  //     alert(error.message);
+  //   }
+  // };
+
+  useEffect(() => {
+    if (user && user.email === "customer@mail.ru") {
+      props.navigation.navigate("CustomerScreen");
     }
-  };
+    if (user && user.email === "master@mail.ru") {
+      props.navigation.navigate("MasterDashBoardScreen");
+    }
+  }, [user]);
 
   return (
     <KeyboardAvoidingView
@@ -73,7 +109,7 @@ export const LoginScreen = (props) => {
       behavior="padding"
     >
       <View style={styles.container}>
-        <Text>LoginScreen !</Text>
+        <Text>master@mail.ru / customer@mail.ru / pass : 123456</Text>
         <Text>{user?.email}</Text>
         <Input
           style={styles.input}
@@ -87,12 +123,12 @@ export const LoginScreen = (props) => {
           value={password}
           onChangeText={(nextValue) => setPassword(nextValue)}
         />
-        <Input
+        {/* <Input
           style={styles.input}
           placeholder="Update displayName field in user"
           value={update}
           onChangeText={(nextValue) => setUpdate(nextValue)}
-        />
+        /> */}
       </View>
 
       <View style={styles.buttonContainer}>
@@ -100,11 +136,17 @@ export const LoginScreen = (props) => {
           register
         </Button>
 
-        <Button onPress={handleSingIn} style={{ marginHorizontal: 10 }}>
-          Login
-        </Button>
+        {!user ? (
+          <Button onPress={handleSingIn} style={{ marginHorizontal: 10 }}>
+            Login
+          </Button>
+        ) : (
+          <Button onPress={handleSingOut} style={{ marginHorizontal: 10 }}>
+            SignOut
+          </Button>
+        )}
       </View>
-      <View style={styles.buttonContainer}>
+      {/* <View style={styles.buttonContainer}>
         <Button
           onPress={() => props.navigation.navigate("MasterRegistrationScreen")}
           style={{ marginHorizontal: 10 }}
@@ -114,12 +156,12 @@ export const LoginScreen = (props) => {
         <Button onPress={handleSingOut} style={{ marginHorizontal: 10 }}>
           SignOut
         </Button>
-      </View>
-      <View style={styles.buttonContainer}>
+      </View> */}
+      {/* <View style={styles.buttonContainer}>
         <Button onPress={handleUpdateUser} style={{ marginHorizontal: 10 }}>
-        Update displayName
+          Update displayName
         </Button>
-      </View>
+      </View> */}
     </KeyboardAvoidingView>
   );
 };
