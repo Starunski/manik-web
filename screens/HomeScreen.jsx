@@ -72,7 +72,18 @@ export const HomeScreen = (props) => {
 
       {/* <Button onPress={() => readUserData()}>read data</Button> */}
 
-      {/* <Button title="Go back" onPress={() => props.navigation.goBack()} /> */}
+      {user && user.email === "customer@mail.ru" && (
+        <Button onPress={() => props.navigation.navigate("CustomerScreen")}>
+          to customer screen
+        </Button>
+      )}
+      {user && user.email === "master@mail.ru" && (
+        <Button
+          onPress={() => props.navigation.navigate("MasterDashBoardScreen")}
+        >
+          to master screen
+        </Button>
+      )}
     </View>
   );
 };

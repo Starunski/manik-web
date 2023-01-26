@@ -17,10 +17,14 @@ import { getAuth } from "firebase/auth";
 import { app } from "./firebase";
 import { AuthProvider } from "./providers/auth-provider";
 import "react-native-get-random-values";
+import { setupStore } from "./store/store";
+import { Provider } from "react-redux";
 
 const Stack = createNativeStackNavigator();
 
+
 export default function App() {
+  const store = setupStore();
   const [user, setUser] = useState("");
   console.log("useruseruseruseruser test !", user);
 
@@ -45,54 +49,57 @@ export default function App() {
   };
 
   return (
-    <ThemeContext.Provider value={{ theme, toggleTheme }}>
-      <AuthProvider>
-        <ApplicationProvider {...eva} theme={eva.light}>
-          <NavigationContainer>
-            <Stack.Navigator>
-              <Stack.Screen
-                name="HomeScreen"
-                component={screens.HomeScreen}
-                options={{
-                  title: "Home Screen",
-                  headerBackButtonMenuEnabled: false,
-                  headerBackButtonVisible: false,
-                  headerShown: false,
-                }}
-              />
-              <Stack.Screen
-                name="MasterRegistrationScreen"
-                component={screens.MasterRegistrationScreen}
-              />
-              <Stack.Screen
-                name="MasterRegistrationScreen2"
-                component={screens.MasterRegistrationScreen2}
-              />
-              <Stack.Screen
-                name="CustomerScreen"
-                component={screens.CustomerScreen}
-              />
-              <Stack.Screen
-                name="CustomerScreen2"
-                component={screens.CustomerScreen2}
-              />
-              <Stack.Screen
-                name="CustomerDashBoardScreen"
-                component={screens.CustomerDashBoardScreen}
-              />
-              <Stack.Screen
-                name="MasterDashBoardScreen"
-                component={screens.MasterDashBoardScreen}
-              />
-              <Stack.Screen
-                name="LoginScreen"
-                component={screens.LoginScreen}
-              />
-            </Stack.Navigator>
-          </NavigationContainer>
-        </ApplicationProvider>
-      </AuthProvider>
-    </ThemeContext.Provider>
+    <Provider store={store}>
+      <ThemeContext.Provider value={{ theme, toggleTheme }}>
+        <AuthProvider>
+          <ApplicationProvider {...eva} theme={eva.light}>
+            <NavigationContainer>
+              <Stack.Navigator>
+                <Stack.Screen
+                  name="HomeScreen"
+                  component={screens.HomeScreen}
+                  options={{
+                    title: "Home Screen",
+                    headerBackButtonMenuEnabled: false,
+                    headerBackButtonVisible: false,
+                    headerShown: false,
+                  }}
+                />
+                <Stack.Screen
+                  name="MasterRegistrationScreen"
+                  component={screens.MasterRegistrationScreen}
+                />
+                <Stack.Screen
+                  name="MasterRegistrationScreen2"
+                  component={screens.MasterRegistrationScreen2}
+                />
+                <Stack.Screen
+                  name="CustomerScreen"
+                  component={screens.CustomerScreen}
+                  
+                />
+                <Stack.Screen
+                  name="CustomerScreen2"
+                  component={screens.CustomerScreen2}
+                />
+                <Stack.Screen
+                  name="CustomerDashBoardScreen"
+                  component={screens.CustomerDashBoardScreen}
+                />
+                <Stack.Screen
+                  name="MasterDashBoardScreen"
+                  component={screens.MasterDashBoardScreen}
+                />
+                <Stack.Screen
+                  name="LoginScreen"
+                  component={screens.LoginScreen}
+                />
+              </Stack.Navigator>
+            </NavigationContainer>
+          </ApplicationProvider>
+        </AuthProvider>
+      </ThemeContext.Provider>
+    </Provider>
   );
 }
 

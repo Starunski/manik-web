@@ -101,7 +101,7 @@ export const LoginScreen = (props) => {
     if (user && user.email === "master@mail.ru") {
       props.navigation.navigate("MasterDashBoardScreen");
     }
-  }, [user]);
+  }, [user?.email]);
 
   return (
     <KeyboardAvoidingView

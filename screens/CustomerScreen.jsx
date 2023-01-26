@@ -53,11 +53,11 @@ export const CustomerScreen = (props) => {
         }}
       >
         <SelectSimple />
-        <Input
+        {/* <Input
           placeholder="search"
           value={city}
           onChangeText={(nextValue) => setCity(nextValue)}
-        />
+        /> */}
       </View>
 
       {/* <Mapbox /> */}
@@ -73,9 +73,9 @@ export const CustomerScreen = (props) => {
           alignItems: "center",
         }}
       >
-        <Button onPress={() => getData()} title="get data" />
+        {/* <Button onPress={() => getData()} title="get data" /> */}
 
-        <Button onPress={() => onRemoveChild("1")} title="remove" />
+        {/* <Button onPress={() => onRemoveChild("1")} title="remove" /> */}
 
         <Button
           title="NEXT"

@@ -15,16 +15,16 @@ export const SelectSimple = () => {
         setData(data.users);
       }
     } catch (error) {
-      alert("ERROR", error.message);
+      // alert("ERROR", error.message);
+      console.log("ERROR", error.message);
     }
   };
 
-  // useEffect(() => {
-  //   getMasters();
-  // }, []);
+  useEffect(() => {
+    getMasters();
+  }, []);
 
   return (
-    
     <Select
       placeholder={"Select master"}
       value={data && data[selectedIndex - 1]}
