@@ -22,19 +22,13 @@ import { Provider } from "react-redux";
 
 const Stack = createNativeStackNavigator();
 
-
 export default function App() {
   const store = setupStore();
   const [user, setUser] = useState("");
-  console.log("useruseruseruseruser test !", user);
 
   useEffect(() => {
     if (app) {
-      // auth = getAuth(app);
-      console.log("app !!!", app);
       let auth = getAuth(app);
-
-      console.log("auth !!!", auth?.currentUser?.email);
       setUser(auth?.currentUser?.email);
     }
   }, [getAuth]);
@@ -76,7 +70,6 @@ export default function App() {
                 <Stack.Screen
                   name="CustomerScreen"
                   component={screens.CustomerScreen}
-                  
                 />
                 <Stack.Screen
                   name="CustomerScreen2"
@@ -100,6 +93,9 @@ export default function App() {
         </AuthProvider>
       </ThemeContext.Provider>
     </Provider>
+    // <View>
+    //   <Text>Hello, world!</Text>
+    // </View>
   );
 }
 

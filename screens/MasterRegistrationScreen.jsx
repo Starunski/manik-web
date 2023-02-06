@@ -1,9 +1,8 @@
-import React, { useState } from "react";
-import { Button, StyleSheet, Text, View } from "react-native";
-import { Input } from "@ui-kitten/components";
-import { writeUserData, readUserData } from "../firebase";
-import { v4 as uuid } from 'uuid'
-
+import React, {useState} from "react";
+import {Button, StyleSheet, Text, View} from "react-native";
+import {Input} from "@ui-kitten/components";
+import {writeUserData, readUserData} from "../firebase";
+import {v4 as uuid} from 'uuid'
 
 
 export const MasterRegistrationScreen = (props) => {
@@ -11,8 +10,10 @@ export const MasterRegistrationScreen = (props) => {
   const [email, setEmail] = useState("");
   const [price, setPrice] = useState("");
   const [address, setAddress] = useState("");
+
+
   return (
-    <View style={{ flex: 1, alignItems: "center", justifyContent: "center" }}>
+    <View style={{flex: 1, alignItems: "center", justifyContent: "center"}}>
       <Text> registration form </Text>
       <Input
         placeholder="Full name"
@@ -45,7 +46,7 @@ export const MasterRegistrationScreen = (props) => {
         }}
       />
       <Button
-        title="NEXT test "
+        title="NEXT test"
         onPress={() => {
           const res = readUserData();
           console.log(res);

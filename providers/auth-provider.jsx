@@ -1,4 +1,4 @@
-import React, { useState, useEffect, createContext, useContext } from "react";
+import React, {useState, useEffect, createContext, useContext} from "react";
 import {
   getAuth,
   onIdTokenChanged,
@@ -6,20 +6,22 @@ import {
   User as FirebaseUser,
   onAuthStateChanged,
 } from "firebase/auth";
-import { app } from "../firebase";
-import { Text } from "@ui-kitten/components";
+import {app} from "../firebase";
+import {Text} from "@ui-kitten/components";
 
-const AuthContext = createContext({ user: undefined });
 
-export const AuthProvider = ({ children }) => {
+const AuthContext = createContext({user: undefined});
+
+export const AuthProvider = ({children}) => {
   const [user, setUser] = useState(null);
+
 
   useEffect(() => {
     const auth = getAuth(app);
-    console.log("auth AuthProvider!", auth);
-    const unsubscribe = onAuthStateChanged(auth, (user) => {
-      if (user) {
-        setUser(user);
+
+    const unsubscribe = onAuthStateChanged(auth, (firebaseUser) => {
+      if (firebaseUser) {
+        setUser(firebaseUser);
       } else {
         setUser(null);
       }
@@ -28,7 +30,7 @@ export const AuthProvider = ({ children }) => {
   }, []);
 
   return (
-    <AuthContext.Provider value={{ user }}>{children}</AuthContext.Provider>
+    <AuthContext.Provider value={{user}}>{children}</AuthContext.Provider>
   );
 };
 

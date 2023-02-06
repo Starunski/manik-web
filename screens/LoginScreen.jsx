@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, {useState, useEffect} from "react";
 import {
   ApplicationProvider,
   Text,
@@ -7,10 +7,11 @@ import {
   Icon,
   Input,
 } from "@ui-kitten/components";
-import { KeyboardAvoidingView, StyleSheet, View } from "react-native";
-import { EvaIconsPack } from "@ui-kitten/eva-icons";
-import { useAuth } from "../providers/auth-provider";
-import { app } from "../firebase";
+import {KeyboardAvoidingView, StyleSheet, View} from "react-native";
+import {EvaIconsPack} from "@ui-kitten/eva-icons";
+import {useAuth} from "../providers/auth-provider";
+import {app} from "../firebase";
+import {userSlice} from "../store/reducers/userSlice";
 
 import {
   getAuth,
@@ -19,15 +20,22 @@ import {
   signOut,
   updateProfile,
 } from "firebase/auth";
+import {useAppDispatch} from "../hooks/redux";
+import {useAppSelector} from "../hooks/redux";
 
 export const LoginScreen = (props) => {
+  const dispatch = useAppDispatch();
+
   const auth = getAuth(app);
-  const { user } = useAuth();
+  const {user} = useAuth();
   console.log("fireBaseUser", user);
 
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const [update, setUpdate] = useState("");
+  const [email, setEmail] = useState("master@mail.ru");
+  const [password, setPassword] = useState("123456");
+  // const [update, setUpdate] = useState("");
+  const {setFirebaseUser} = userSlice.actions;
+  const {counter, firebaseUser} = useAppSelector((state) => state.userReducer);
+  console.log('firebaseUser !!!', firebaseUser)
 
   const handleSingUp = async () => {
     try {
@@ -36,6 +44,7 @@ export const LoginScreen = (props) => {
       console.log("res!!!!!!!!!!!!!!!!!!!!!! firebaseUser", firebaseUser);
 
       // const url = "https://jsonplaceholder.typicode.com/users";
+
       // const url = "http://localhost:5000/api/user";
 
       // const aa = await fetch(url);
@@ -66,9 +75,12 @@ export const LoginScreen = (props) => {
   };
 
   const handleSingIn = async () => {
+    console.log('handleSingIn')
     try {
       const res = await signInWithEmailAndPassword(auth, email, password);
       alert(`User ${res.user.email} is logged in `);
+      console.log('dispatch')
+      dispatch(setFirebaseUser(res.user.providerData))
     } catch (error) {
       alert(error.message);
     }
@@ -105,12 +117,14 @@ export const LoginScreen = (props) => {
 
   return (
     <KeyboardAvoidingView
-      style={{ flex: 1, alignItems: "center", justifyContent: "center" }}
+      style={{flex: 1, alignItems: "center", justifyContent: "center"}}
       behavior="padding"
     >
       <View style={styles.container}>
         <Text>master@mail.ru / customer@mail.ru / pass : 123456</Text>
         <Text>{user?.email}</Text>
+        <Text>{firebaseUser && JSON.stringify(firebaseUser) }</Text>
+
         <Input
           style={styles.input}
           placeholder="Email"
@@ -132,16 +146,16 @@ export const LoginScreen = (props) => {
       </View>
 
       <View style={styles.buttonContainer}>
-        <Button onPress={handleSingUp} style={{ marginHorizontal: 10 }}>
+        <Button onPress={handleSingUp} style={{marginHorizontal: 10}}>
           register
         </Button>
 
         {!user ? (
-          <Button onPress={handleSingIn} style={{ marginHorizontal: 10 }}>
+          <Button onPress={handleSingIn} style={{marginHorizontal: 10}}>
             Login
           </Button>
         ) : (
-          <Button onPress={handleSingOut} style={{ marginHorizontal: 10 }}>
+          <Button onPress={handleSingOut} style={{marginHorizontal: 10}}>
             SignOut
           </Button>
         )}

@@ -5,7 +5,7 @@ import { CustomerScreen2 } from "./CustomerScreen2";
 import { HomeScreen } from "./HomeScreen";
 import { LoginScreen } from "./LoginScreen";
 import { CustomerDashBoardScreen } from "./CustomerDashBoardScreen";
-import { MasterDashBoardScreen } from "./MasterDashBoardScreen";
+import { MasterDashBoardScreen } from "./master/MasterDashBoardScreen";
 
 export const screens = {
   HomeScreen,
