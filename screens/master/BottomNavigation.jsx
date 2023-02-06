@@ -1,69 +1,26 @@
-// import React from "react";
-// import { NavigationContainer } from "@react-navigation/native";
-// import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
-// import {
-//   BottomNavigation,
-//   BottomNavigationTab,
-//   Layout,
-//   Text,
-// } from "@ui-kitten/components";
+import { View } from 'react-native'
+import React from 'react'
+import { BottomNavigation, BottomNavigationTab } from '@ui-kitten/components'
 
-// const { Navigator, Screen } = createBottomTabNavigator();
+export const BottomNavigationSimpleUsageShowcase = ({ customer }) => {
+  const [selectedIndex, setSelectedIndex] = React.useState(0)
 
-// const UsersScreen = () => (
-//   <Layout style={{ flex: 1, justifyContent: "center", alignItems: "center" }}>
-//     <Text category="h1">USERS</Text>
-//   </Layout>
-// );
-
-// const OrdersScreen = () => (
-//   <Layout style={{ flex: 1, justifyContent: "center", alignItems: "center" }}>
-//     <Text category="h1">ORDERS</Text>
-//   </Layout>
-// );
-
-// const BottomTabBar = ({ navigation, state }) => (
-//   <BottomNavigation
-//     selectedIndex={state.index}
-//     onSelect={(index) => navigation.navigate(state.routeNames[index])}
-//   >
-//     <BottomNavigationTab title="USERS" />
-//     <BottomNavigationTab title="ORDERS" />
-//   </BottomNavigation>
-// );
-
-// const TabNavigator = () => (
-//   <Navigator tabBar={(props) => <BottomTabBar {...props} />}>
-//     <Screen name="Users" component={UsersScreen} />
-//     <Screen name="Orders" component={OrdersScreen} />
-//   </Navigator>
-// );
-
-// export const AppNavigator = () => (
-//   <NavigationContainer>
-//     <TabNavigator />
-//   </NavigationContainer>
-// );
-
-
-import React from 'react';
-import { BottomNavigation, BottomNavigationTab } from '@ui-kitten/components';
-
-export const BottomNavigationSimpleUsageShowcase = ( {navigation} ) => {
-  console.log('BottomNavigationSimpleUsageShowcase', navigation)
-
-  const [selectedIndex, setSelectedIndex] = React.useState(0);
-
-  const navigateTo = () => navigation.navigate('HomeScreen')
+  const navigateTo = () => console.log('HomeScreen')
 
   return (
-    <BottomNavigation
-      selectedIndex={selectedIndex}
-      onSelect={index => setSelectedIndex(index)}>
-      <BottomNavigationTab title='USERS' onPress={() =>  navigation.navigate("HomeScreen")}  />
-      <BottomNavigationTab title='ORDERS' onSelect={navigateTo}/>
-      <BottomNavigationTab title='TRANSACTIONS' onSelect={navigateTo}/>
+    <BottomNavigation selectedIndex={selectedIndex} onSelect={index => setSelectedIndex(index)}>
+      {customer ? (
+        <View>
+          <BottomNavigationTab title="USERS"  />
+          <BottomNavigationTab title="ORDERS" onSelect={navigateTo} />
+          <BottomNavigationTab title="TRANSACTIONS" onSelect={navigateTo} />
+        </View>
+      ) : (
+        < >
+          <BottomNavigationTab title="USERS" onPress={navigateTo} />
+          <BottomNavigationTab title="TRANSACTIONS" onSelect={navigateTo} />
+        </>
+      )}
     </BottomNavigation>
-  );
-};
-
+  )
+}
