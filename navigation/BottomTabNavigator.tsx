@@ -4,45 +4,50 @@
  */
 
 import { Ionicons } from '@expo/vector-icons'
-import { createBottomTabNavigator } from '@react-navigation/bottom-tabs'
+import { createBottomTabNavigator  } from '@react-navigation/bottom-tabs'
 import { createStackNavigator } from '@react-navigation/stack'
 import * as React from 'react'
-
+import { screens } from '../screens/index'
 // import Colors from '../constants/Colors'
 // import useColorScheme from '../hooks/useColorScheme'
 import TabOneScreen from '../screens/TabOneScreen'
 import TabTwoScreen from '../screens/TabTwoScreen'
 // import { BottomTabParamList, TabOneParamList, TabTwoParamList } from '../types'
 
-const BottomTab = createBottomTabNavigator()
+const Tab = createBottomTabNavigator()
 
 export default function BottomTabNavigator() {
-  // const colorScheme = useColorScheme()
 
   return (
-    <BottomTab.Navigator
-      initialRouteName="TabOne"
-      // tabBarOptions={{ activeTintColor: Colors[colorScheme].tint }}
+    <Tab.Navigator
+      screenOptions={({ route }) => ({
+        tabBarIcon: ({ focused, color, size }) => {
+          let iconName
+          let rn = route.name
+          if (rn === 'Calendar') {
+            iconName = focused ? 'calendar' : 'calendar-outline'
+          } else if (rn === 'Clients') {
+            iconName = focused ? 'people' : 'people-outline'
+          } else if (rn === 'SalesScreen') {
+            iconName = focused ? 'cash' : 'cash-outline'
+          } else if (rn === 'Marketing') {
+            iconName = focused ? 'flash-sharp' : 'flash-outline'
+          } else if (rn === 'ProfileScreen') {
+            iconName = focused ? 'home' : 'home-outline'
+          }
+          return <Ionicons name={iconName} size={size} color={color} />
+        },
+        tabBarActiveTintColor: 'tomato',
+        tabBarInactiveTintColor: 'gray'
+      })}
     >
-      <BottomTab.Screen
-        name="TabOne"
-        component={TabOneNavigator}
-        // options={{
-        //   tabBarIcon: ({ color }) => (
-        //     <TabBarIcon name="ios-code" color={color} />
-        //   )
-        // }}
-      />
-      <BottomTab.Screen
-        name="TabTwo"
-        component={TabTwoNavigator}
-        // options={{
-        //   tabBarIcon: ({ color }) => (
-        //     <TabBarIcon name="ios-code" color={color} />
-        //   )
-        // }}
-      />
-    </BottomTab.Navigator>
+      <Tab.Screen name="Home" component={screens.HomeScreen} />
+      <Tab.Screen name="Calendar" component={screens.CalendarScreen} />
+      <Tab.Screen name="Clients" component={screens.ClientsScreen} />
+      <Tab.Screen name="SalesScreen" component={screens.SalesScreen} />
+      <Tab.Screen name="Marketing" component={screens.MarketingScreen} />
+      <Tab.Screen name="ProfileScreen" component={screens.ProfileScreen} />
+    </Tab.Navigator>
   )
 }
 
@@ -57,30 +62,4 @@ export default function BottomTabNavigator() {
 
 // Each tab has its own navigation stack, you can read more about this pattern here:
 // https://reactnavigation.org/docs/tab-based-navigation#a-stack-navigator-for-each-tab
-const TabOneStack = createStackNavigator()
-
-function TabOneNavigator() {
-  return (
-    <TabOneStack.Navigator>
-      <TabOneStack.Screen
-        name="TabOneScreen"
-        component={TabOneScreen}
-        options={{ headerTitle: 'Tab One Title' }}
-      />
-    </TabOneStack.Navigator>
-  )
-}
-
-const TabTwoStack = createStackNavigator()
-
-function TabTwoNavigator() {
-  return (
-    <TabTwoStack.Navigator>
-      <TabTwoStack.Screen
-        name="TabTwoScreen"
-        component={TabTwoScreen}
-        options={{ headerTitle: 'Tab Two Title' }}
-      />
-    </TabTwoStack.Navigator>
-  )
-}
+ 

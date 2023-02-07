@@ -17,6 +17,7 @@ import { Provider } from 'react-redux'
 import { Layout } from './components/Layout'
 import BottomTabNavigator from './navigation/BottomTabNavigator'
 import Ionicons from '@expo/vector-icons/Ionicons'
+import RootNavigator from './navigation/stacks/RootNavigator'
 
 const Stack = createNativeStackNavigator()
 
@@ -68,7 +69,9 @@ export default function App() {
                 <Stack.Screen name="LoginScreen" component={screens.LoginScreen} />
                 <Stack.Screen name="TabExample" component={BottomTabNavigator} />
               </Stack.Navigator> */}
-              <Tab.Navigator
+              <RootNavigator/>
+              {/* <BottomTabNavigator/> */}
+              {/* <Tab.Navigator
                 screenOptions={({ route }) => ({
                   tabBarIcon: ({ focused, color, size }) => {
                     let iconName
@@ -96,12 +99,12 @@ export default function App() {
                 {/* <Tab.Screen name="Home" component={screens.HomeScreen} /> */}
                 {/* <Stack.Screen name="LoginScreen" component={screens.LoginScreen} /> */}
 
-                <Tab.Screen name="Calendar" component={screens.CalendarScreen} />
+                {/* <Tab.Screen name="Calendar" component={screens.CalendarScreen} />
                 <Tab.Screen name="Clients" component={screens.ClientsScreen} />
                 <Tab.Screen name="SalesScreen" component={screens.SalesScreen} />
                 <Tab.Screen name="Marketing" component={screens.MarketingScreen} />
                 <Tab.Screen name="ProfileScreen" component={screens.ProfileScreen} />
-              </Tab.Navigator>
+              </Tab.Navigator>   */}
             </NavigationContainer>
             {/* </Layout> */}
           </ApplicationProvider>
