@@ -41,7 +41,7 @@ export default function BottomTabNavigator() {
         tabBarInactiveTintColor: 'gray'
       })}
     >
-      <Tab.Screen name="Home" component={screens.HomeScreen} />
+      {/* <Tab.Screen name="Home" component={screens.HomeScreen} /> */}
       <Tab.Screen name="Calendar" component={screens.CalendarScreen} />
       <Tab.Screen name="Clients" component={screens.ClientsScreen} />
       <Tab.Screen name="SalesScreen" component={screens.SalesScreen} />
