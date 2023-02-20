@@ -1,15 +1,8 @@
-import { Button, StyleSheet, Text, View, SafeAreaView } from "react-native";
-import React, { useState } from "react";
-import {
-  IndexPath,
-  Layout,
-  Select,
-  SelectItem,
-  Input,
-  Avatar,
-} from "@ui-kitten/components";
-import { SelectSimple } from "../components/SelectSimple";
-import { readUserData, onRemoveChild } from "../firebase";
+import { Button, StyleSheet, Text, View, SafeAreaView } from 'react-native'
+import React, { useState } from 'react'
+import { IndexPath, Layout, Select, SelectItem, Input, Avatar } from '@ui-kitten/components'
+import { SelectSimple } from '../components/SelectSimple'
+import { readUserData, onRemoveChild } from '../firebase'
 // import { Mapbox } from "../components/Mapbox";
 
 // import MapboxGL from "@rnmapbox/maps";
@@ -18,9 +11,9 @@ import { readUserData, onRemoveChild } from "../firebase";
 //   "pk.eyJ1Ijoic3RhcnVuc2tpIiwiYSI6ImNsZDV2Y2xlOTA3aGwzcG1tNWtnaXEyZG4ifQ.k8mQDN00uRBZDrLiqBXgpg"
 // );
 
-export const CustomerScreen = (props) => {
-  const [city, setCity] = useState("");
-  const [data, setData] = useState([]);
+export const CustomerScreen = props => {
+  const [city, setCity] = useState('')
+  const [data, setData] = useState([])
 
   // const getData = async () => {
   //   try {
@@ -37,22 +30,22 @@ export const CustomerScreen = (props) => {
       {/* <View style={{ flex: 1, alignItems: "center", justifyContent: "center" }}> */}
       <View
         style={{
-          display: "flex",
-          justifyContent: "center",
-          alignItems: "center",
-          width: "100%",
-          padding: 20,
+          display: 'flex',
+          justifyContent: 'center',
+          alignItems: 'center',
+          width: '100%',
+          padding: 20
         }}
       >
-        <Avatar source={require("../assets/photo.png")} />
+        <Avatar source={require('../assets/photo.png')} />
       </View>
 
       <View
         style={{
-          width: "100%",
+          width: '100%'
         }}
       >
-        <SelectSimple />
+        <SelectSimple propData={[]} />
         {/* <Input
           placeholder="search"
           value={city}
@@ -68,34 +61,31 @@ export const CustomerScreen = (props) => {
 
       <View
         style={{
-          display: "flex",
-          justifyContent: "center",
-          alignItems: "center",
+          display: 'flex',
+          justifyContent: 'center',
+          alignItems: 'center'
         }}
       >
         {/* <Button onPress={() => getData()} title="get data" /> */}
 
         {/* <Button onPress={() => onRemoveChild("1")} title="remove" /> */}
 
-        <Button
-          title="NEXT"
-          onPress={() => props.navigation.navigate("CustomerScreen2")}
-        />
+        <Button title="NEXT" onPress={() => props.navigation.navigate('CustomerScreen2')} />
       </View>
 
       <Text> {data} </Text>
       {/* </View> */}
     </SafeAreaView>
-  );
-};
+  )
+}
 
 const styles = StyleSheet.create({
   container: {
     // minHeight: 128,
-    display: "flex",
-    flexDirection: "column",
-    justifyContent: "center",
-    alignItems: "center",
-    width: "100%",
-  },
-});
+    display: 'flex',
+    flexDirection: 'column',
+    justifyContent: 'center',
+    alignItems: 'center',
+    width: '100%'
+  }
+})

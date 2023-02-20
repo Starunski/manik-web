@@ -22,7 +22,7 @@ export const SalesScreen = props => {
       <View styles={styles.container}>
         {/* <ClientsAutocompleteList /> */}
         {/* <UserList  buttonName={'Select'}/> */}
-        <SelectSimple />
+        <SelectSimple  propData={[]}/>
         <Input
           placeholder="How much client need to pay ?"
           value={value}

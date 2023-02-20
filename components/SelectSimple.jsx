@@ -2,35 +2,39 @@ import React, { useState, useEffect } from 'react'
 import { StyleSheet } from 'react-native'
 import { IndexPath, Layout, Select, SelectItem } from '@ui-kitten/components'
 
-export const SelectSimple = () => {
+export const SelectSimple = ({ data, setData, setSelectedTime }) => {
   const [selectedIndex, setSelectedIndex] = useState()
-  const [data, setData] = useState(['Ira', 'Ivan', 'Vaisya'])
 
-  const getMasters = async () => {
-    try {
-      const res = await fetch('http://localhost:5000/api')
-      const data = await res.json()
-      if (data) {
-        // alert(data.users);
-        setData(data.users)
-      }
-    } catch (error) {
-      // alert("ERROR", error.message);
-      console.log('ERROR', error.message)
-    }
-  }
+  // const getMasters = async () => {
+  //   try {
+  //     const res = await fetch('http://localhost:5000/api')
+  //     const data = await res.json()
+  //     if (data) {
+  //       // alert(data.users);
+  //       setData(data.users)
+  //     }
+  //   } catch (error) {
+  //     // alert("ERROR", error.message);
+  //     console.log('ERROR', error.message)
+  //   }
+  // }
 
-  useEffect(() => {
-    getMasters()
-  }, [])
+  // useEffect(() => {
+  //   getMasters()
+  // }, [])
 
   return (
     <Select
-      placeholder={'Select master'}
+      placeholder={'Select time slot'}
       value={data && data[selectedIndex - 1]}
       selectedIndex={selectedIndex}
       onSelect={index => {
+        console.log('index', index)
         setSelectedIndex(index)
+
+        if (data) {
+          setSelectedTime(data[index - 1])
+        }
       }}
     >
       {data?.map((item, id) => {
