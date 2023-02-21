@@ -8,7 +8,7 @@ interface UserState {
   error: string
   counter: number
   firebaseUser: null
-  reservations: any
+  clientReservations: any[]
 }
 
 const initialState: UserState = {
@@ -17,25 +17,23 @@ const initialState: UserState = {
   error: '',
   counter: 0,
   firebaseUser: null,
-  reservations: {
-    '2023-02-15': [
-      { name: 'Nastia', time: '09 00' },
-      { name: 'Sasha', time: '12 00' },
-      { name: 'Zenia', time: '15 00' },
-      { name: 'Nastia', time: '17 00' },
-      { name: 'Nastia', time: '19 00' },
-      { name: 'Katia', time: '21 00' }
-    ],
-    '2023-02-16': [
-      { name: 'Nastia', time: '09 00' },
-      { name: 'Sasha', time: '12 00' }
-    ],
-    '2023-02-20': [
-      { name: 'Nastia', time: '12 00' },
-      { name: 'Sasha', time: '14 00' }
-    ]
-    // '2023-02-23': [{ name: 'item 2 - any js object', height: 80 }]
-  }
+  clientReservations: [
+    {
+      date: '2023/2/15',
+      reservations: [
+        { id: '1', name: 'Nastia', time: '09 00' },
+        { id: '2', name: 'Katia', time: '21 00' }
+      ]
+    },
+    {
+      date: '2023/2/16',
+      reservations: [
+        { id: '4', name: 'Nastia', time: '09 00' },
+        { id: '3', name: 'Katia', time: '21 00' }
+      ]
+    }
+  ]
+  // '2023-02-23': [{ name: 'item 2 - any js object', height: 80 }]
 }
 
 export const userSlice = createSlice({
@@ -54,18 +52,30 @@ export const userSlice = createSlice({
     },
     addReservation: (state, action) => {
       console.log('addReservation action.payload = ', action.payload)
-      if (!Object.keys(state.reservations).includes(action.payload.day)) {
-        state.reservations[action.payload.day] = [action.payload.reservation]
-        // state.reservations[action.payload.date].push(action.payload)
+      const reservation = state.clientReservations.find(res => res.date === action.payload.date)
+      if (reservation) {
+        reservation.reservations.push(action.payload.reservation)
       } else {
-        state.reservations[action.payload.day].push(action.payload.reservation)
+        state.clientReservations.push({ date: action.payload.date, reservations: [action.payload.reservation] })
       }
 
       // state.reservations = { ...state, ...action.payload }
     },
     deleteReservation: (state, action) => {
       console.log('deleteReservation action.payload = ', action.payload)
-      state.reservations.filter(reservation => reservation !== action.payload)
+      const reservation = state.clientReservations.find(res => res.date === action.payload.date)
+      if (reservation) {
+        console.log('reservation found ', reservation)
+        reservation.reservations = reservation.reservations.filter(el => el.id !== action.payload.reservation.id)
+      }
+    },
+    updateReservation: (state, action) => {
+      // const reservation = state.clientReservations.find(res => res.date === action.payload.date)
+      // if (reservation) {
+      //   reservation = action.payload.reservation
+      // }
+
+      console.log('updateReservation action.payload = ', action.payload)
     }
   },
   extraReducers: {

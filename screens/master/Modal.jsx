@@ -6,9 +6,8 @@ import { userSlice } from '../../store/reducers/userSlice'
 import { useAppDispatch } from '../../hooks/redux'
 import { useAppSelector } from '../../hooks/redux'
 
-export const ModalWithBackdropShowcase = ({ visible, setVisible, day }) => {
-  const [data, setData] = useState(['9:00', '12:00', '15:00', "17:'00"])
-  const [name, setName] = useState('')
+export const ModalWithBackdropShowcase = ({ visible, setVisible, date,data, setData,name, setName }) => {
+
   const [selectedTime, setSelectedTime] = useState()
   const { counter, firebaseUser } = useAppSelector(state => state.userReducer)
   const dispatch = useAppDispatch()
@@ -16,11 +15,13 @@ export const ModalWithBackdropShowcase = ({ visible, setVisible, day }) => {
 
   console.log('selectedTime', selectedTime)
 
-  const onAddReservation = (selectedTime, name, day) => {
-    console.log('onAddReservation', day)
+  const onAddReservation = (selectedTime, name, date) => {
+    console.log('onAddReservation', date)
     setVisible(false)
-    const dateReservation = { day, reservation: { time: selectedTime, name } }
-    dispatch(addReservation(dateReservation))
+    if (date && selectedTime && name) {
+      const dateReservation = { date, reservation: { id: new Date().valueOf(), time: selectedTime, name } }
+      dispatch(addReservation(dateReservation))
+    }
   }
 
   return (
@@ -38,7 +39,7 @@ export const ModalWithBackdropShowcase = ({ visible, setVisible, day }) => {
             onChangeText={nextValue => setName(nextValue)}
           />
           <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
-            <Button onPress={() => onAddReservation(selectedTime, name, day.dateString)}>Ok</Button>
+            <Button onPress={() => onAddReservation(selectedTime, name, date)}>Ok</Button>
             <Button onPress={() => setVisible(false)}>Cancel</Button>
           </View>
         </Card>

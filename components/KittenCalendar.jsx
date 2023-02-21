@@ -2,17 +2,30 @@ import React from 'react'
 import { StyleSheet, View } from 'react-native'
 import { Calendar, Text } from '@ui-kitten/components'
 
-const DayCell = ({ date }, style) => (
-  <View style={[styles.dayContainer, style.container]}>
-    <Text style={style.text}>{`${date.getDate()}`}</Text>
-    <Text style={[style.text, styles.value]}>{`${100 * date.getDate() + Math.pow(date.getDate(), 2)}$`}</Text>
-  </View>
-)
+const DayCell = ({ date }, style) => {
+  return (
+    <View style={[styles.dayContainer, style.container]}>
+      <Text style={style.text}>{`${date.getDate()}`}</Text>
+      {/* <Text style={[style.text, styles.value]}>{`${100 * date.getDate() + Math.pow(date.getDate(), 2)}$`}</Text> */}
+      <Text style={[style.text, styles.value]}>{ `${"..."}`}</Text>
+    </View>
+  )
+}
 
-export const KittenCalendar = () => {
-  const [date, setDate] = React.useState(null)
+export const KittenCalendar = ({ date, setDate, setTemp }) => {
+  return (
+    <Calendar
+      date={date}
+      onSelect={nextDate => {
+        console.log('nextDate.getValue()', nextDate.toLocaleDateString('eu-EU'))
 
-  return <Calendar date={date} onSelect={nextDate => setDate(nextDate)} renderDay={DayCell} />
+        // console.log('nextDate', new Date(nextDate.getValue()).toLocaleDateString("en-US"))
+        setTemp(nextDate.toLocaleDateString('eu-EU'))
+        setDate(nextDate)
+      }}
+      renderDay={DayCell}
+    />
+  )
 }
 
 const styles = StyleSheet.create({
