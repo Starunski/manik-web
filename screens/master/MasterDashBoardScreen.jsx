@@ -9,7 +9,6 @@ import { fetchUsers } from '../../store/reducers/ActionCreators'
 import { BottomNavigationSimpleUsageShowcase } from './BottomNavigation'
 import { BottomTabNavigator } from '../../navigation/BottomTabNavigator'
 
-
 export const MasterDashBoardScreen = props => {
   const [date, setDate] = React.useState(new Date())
   const dispatch = useAppDispatch()

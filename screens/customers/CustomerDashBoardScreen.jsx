@@ -9,7 +9,7 @@ export const CustomerDashBoardScreen = (props) => {
   return (
     <View style={{ flex: 1, alignItems: "center", justifyContent: "center" }}>
       <View>
-        <Avatar source={require("../assets/photo.png")} />
+        <Avatar source={require("../../assets/photo.png")} />
       </View>
 
       <Text category="h6">CustomerDashBoardScreen</Text>

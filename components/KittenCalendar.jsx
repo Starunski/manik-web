@@ -19,18 +19,24 @@ export const KittenCalendar = () => {
   const dispatch = useAppDispatch()
   const { setActiveCalendarDay } = userSlice.actions
   return (
-    <Calendar
-      date={date}
-      onSelect={nextDate => {
-        setDate(nextDate)
-        dispatch(setActiveCalendarDay(nextDate.toLocaleDateString('eu-EU')))
-      }}
-      renderDay={DayCell}
-    />
+    <View style={[styles.calendarContainer]}>
+      <Calendar
+        date={date}
+        onSelect={nextDate => {
+          setDate(nextDate)
+          dispatch(setActiveCalendarDay(nextDate.toLocaleDateString('eu-EU')))
+        }}
+        renderDay={DayCell}
+      />
+    </View>
   )
 }
 
 const styles = StyleSheet.create({
+  calendarContainer: {
+    alignItems: 'center',
+    paddingVertical: 8
+  },
   dayContainer: {
     flex: 1,
     justifyContent: 'center',

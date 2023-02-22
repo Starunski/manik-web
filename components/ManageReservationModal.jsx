@@ -6,7 +6,7 @@ import { userSlice } from '../store/reducers/userSlice'
 import { useAppDispatch } from '../hooks/redux'
 import { useAppSelector } from '../hooks/redux'
 
-export const ManageReservationModal = ({ onClose }) => {
+export const ManageReservationModal = ({ onClose, variant }) => {
   const dispatch = useAppDispatch()
   const selectedReservation = useAppSelector(state => state.userReducer.selectedReservation)
   const activeCalendarDay = useAppSelector(state => state.userReducer.activeCalendarDay)
@@ -53,8 +53,10 @@ export const ManageReservationModal = ({ onClose }) => {
             onChangeText={nextValue => setName(nextValue)}
           />
           <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
-            <Button onPress={onAddReservation}>Ok</Button>
-            <Button onPress={onUpdateReservation}>Update</Button>
+            <Button onPress={variant === 'add' ? onAddReservation : onUpdateReservation}>
+              {variant === 'add' ? 'Add' : 'Update'}
+            </Button>
+            {/* <Button onPress={onUpdateReservation}>Update</Button> */}
             <Button onPress={() => onClose()}>Cancel</Button>
           </View>
         </Card>

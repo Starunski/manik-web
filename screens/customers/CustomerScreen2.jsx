@@ -8,7 +8,7 @@ export const CustomerScreen2 = (props) => {
   return (
     <View style={{ flex: 1, alignItems: "center", justifyContent: "center" }}>
       <View>
-        <Avatar source={require("../assets/photo.png")} />
+        {/* <Avatar source={require("../assets/photo.png")} /> */}
       </View>
       <Text>price $ 70 </Text>
       <Calendar date={date} onSelect={(nextDate) => setDate(nextDate)} />

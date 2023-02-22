@@ -1,8 +1,8 @@
 import { Button, StyleSheet, Text, View, SafeAreaView } from 'react-native'
 import React, { useState } from 'react'
 import { IndexPath, Layout, Select, SelectItem, Input, Avatar } from '@ui-kitten/components'
-import { SelectSimple } from '../components/SelectSimple'
-import { readUserData, onRemoveChild } from '../firebase'
+import { SelectSimple } from '../../components/SelectSimple'
+import { readUserData, onRemoveChild } from '../../firebase'
 // import { Mapbox } from "../components/Mapbox";
 
 // import MapboxGL from "@rnmapbox/maps";
@@ -37,7 +37,7 @@ export const CustomerScreen = props => {
           padding: 20
         }}
       >
-        <Avatar source={require('../assets/photo.png')} />
+        {/* <Avatar source={require('../assets/photo.png')} /> */}
       </View>
 
       <View

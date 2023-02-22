@@ -12,10 +12,12 @@ export const CalendarScreen = props => {
   const dispatch = useAppDispatch()
   const { filteredReservationByDay } = useReservation()
   const [showModal, setShowModal] = useState(false)
+  const [variant, setVariant] = useState('add')
   const { setSelectedReservation, setActiveCalendarDay } = userSlice.actions
 
   const onOpenEditModal = reservation => {
     dispatch(setSelectedReservation({ date: filteredReservationByDay.date, reservation }))
+    setVariant('edit')
     setShowModal(true)
   }
 
@@ -28,7 +30,13 @@ export const CalendarScreen = props => {
     <SafeAreaView style={styles.container}>
       <View styles={styles.container}>
         <KittenCalendar />
-        <Button title="+" onPress={() => setShowModal(true)} />
+        <Button
+          title="Add new reservation +"
+          onPress={() => {
+            setVariant('add')
+            setShowModal(true)
+          }}
+        />
       </View>
       <View>
         {/* <Text>{date && `${date}`}</Text> */}
@@ -38,7 +46,7 @@ export const CalendarScreen = props => {
           <ReservationItem reservation={reservation} isFirst={idx === 0} onEdit={onOpenEditModal} />
         ))}
       </View>
-      {showModal && <ManageReservationModal onClose={() => setShowModal(false)} />}
+      {showModal && <ManageReservationModal onClose={() => setShowModal(false)} variant={variant} />}
     </SafeAreaView>
   )
 }
@@ -49,6 +57,7 @@ const styles = StyleSheet.create({
     // flexDirection: 'row',
     // justifyContent: 'center',
     // alignItems: 'center'
+    backgroundColor: 'white',
     width: '100%',
     height: '100%'
   },
