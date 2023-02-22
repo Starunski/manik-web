@@ -3,17 +3,15 @@ import React, { useState, useEffect } from 'react'
 import { useAppSelector } from './redux'
 
 export const useReservation = () => {
-  const [date, setDate] = useState(null)
-  const [temp, setTemp] = useState(null)
   const [filteredReservationByDay, setFilteredReservationByDay] = useState({})
   const { clientReservations } = useAppSelector(state => state.userReducer)
-
+  const { activeCalendarDay } = useAppSelector(state => state.userReducer)
 
   useEffect(() => {
-    if (date && clientReservations.length) {
-      setFilteredReservationByDay(...clientReservations?.filter(res => res.date === date.toLocaleDateString('eu-EU')))
+    if (clientReservations.length) {
+      setFilteredReservationByDay(...clientReservations?.filter(res => res.date === activeCalendarDay))
     }
-  }, [date, setFilteredReservationByDay, clientReservations])
+  }, [setFilteredReservationByDay, clientReservations,activeCalendarDay])
 
-  return { date, setDate, filteredReservationByDay, setFilteredReservationByDay, temp, setTemp }
+  return { filteredReservationByDay, setFilteredReservationByDay }
 }

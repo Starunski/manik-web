@@ -6,32 +6,46 @@ import { userSlice } from '../../store/reducers/userSlice'
 import { useAppDispatch } from '../../hooks/redux'
 import { useAppSelector } from '../../hooks/redux'
 
-export const ModalWithBackdropShowcase = ({ visible, setVisible, date,data, setData,name, setName }) => {
-
-  const [selectedTime, setSelectedTime] = useState()
-  const { counter, firebaseUser } = useAppSelector(state => state.userReducer)
+export const ManageReservationModal = ({ onClose }) => {
   const dispatch = useAppDispatch()
-  const { addReservation } = userSlice.actions
+  const selectedReservation = useAppSelector(state => state.userReducer.selectedReservation)
+  const activeCalendarDay = useAppSelector(state => state.userReducer.activeCalendarDay)
 
-  console.log('selectedTime', selectedTime)
+  const [selectedTime, setSelectedTime] = useState(selectedReservation.time)
+  const [ailableTime, setAvailableTime] = useState(['9:00', '12:00', '15:00', "17:'00"])
+  const [name, setName] = useState('')
 
-  const onAddReservation = (selectedTime, name, date) => {
-    console.log('onAddReservation', date)
-    setVisible(false)
-    if (date && selectedTime && name) {
-      const dateReservation = { date, reservation: { id: new Date().valueOf(), time: selectedTime, name } }
+  const onAddReservation = () => {
+    const { addReservation } = userSlice.actions
+    if (activeCalendarDay && selectedTime && name) {
+
+      const dateReservation = {
+        date: activeCalendarDay,
+        reservation: { id: new Date().valueOf(), time: selectedTime, name }
+      }
       dispatch(addReservation(dateReservation))
     }
+    onClose()
+  }
+
+  const onUpdateReservation = () => {
+    const { updateReservation } = userSlice.actions
+    if (activeCalendarDay && selectedTime && name) {
+      const updatedReservation = {
+        date: activeCalendarDay,
+        reservation: { id: selectedReservation.reservation.id, time: selectedTime, name }
+      }
+      dispatch(updateReservation(updatedReservation))
+    }
+    onClose()
   }
 
   return (
     <View style={styles.container}>
-      <Button onPress={() => setVisible(true)}>TOGGLE MODAL</Button>
-
-      <Modal visible={visible} backdropStyle={styles.backdrop} onBackdropPress={() => setVisible(false)}>
+      <Modal visible={true} backdropStyle={styles.backdrop} onBackdropPress={onClose}>
         <Card disabled={true}>
           <Text>Add free time to your schedule 😻</Text>
-          <SelectSimple data={data} setData={setData} setSelectedTime={setSelectedTime} />
+          <SelectSimple data={ailableTime} setData={setAvailableTime} setSelectedTime={setSelectedTime} />
           <Input
             style={styles.input}
             placeholder="Client name"
@@ -39,8 +53,9 @@ export const ModalWithBackdropShowcase = ({ visible, setVisible, date,data, setD
             onChangeText={nextValue => setName(nextValue)}
           />
           <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
-            <Button onPress={() => onAddReservation(selectedTime, name, date)}>Ok</Button>
-            <Button onPress={() => setVisible(false)}>Cancel</Button>
+            <Button onPress={onAddReservation}>Ok</Button>
+            <Button onPress={onUpdateReservation}>Update</Button>
+            <Button onPress={() => onClose()}>Cancel</Button>
           </View>
         </Card>
       </Modal>

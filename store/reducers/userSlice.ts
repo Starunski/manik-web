@@ -8,6 +8,8 @@ interface UserState {
   error: string
   counter: number
   firebaseUser: null
+  selectedReservation: null
+  activeCalendarDay: string
   clientReservations: any[]
 }
 
@@ -17,6 +19,8 @@ const initialState: UserState = {
   error: '',
   counter: 0,
   firebaseUser: null,
+  activeCalendarDay: '',
+  selectedReservation: null,
   clientReservations: [
     {
       date: '2023/2/15',
@@ -47,35 +51,34 @@ export const userSlice = createSlice({
       state.counter -= action.payload
     },
     setFirebaseUser: (state, action) => {
-      console.log('setFirebaseUser action.payload = ', action.payload)
       state.firebaseUser = action.payload
     },
     addReservation: (state, action) => {
-      console.log('addReservation action.payload = ', action.payload)
       const reservation = state.clientReservations.find(res => res.date === action.payload.date)
       if (reservation) {
         reservation.reservations.push(action.payload.reservation)
       } else {
         state.clientReservations.push({ date: action.payload.date, reservations: [action.payload.reservation] })
       }
-
-      // state.reservations = { ...state, ...action.payload }
     },
     deleteReservation: (state, action) => {
-      console.log('deleteReservation action.payload = ', action.payload)
-      const reservation = state.clientReservations.find(res => res.date === action.payload.date)
-      if (reservation) {
-        console.log('reservation found ', reservation)
-        reservation.reservations = reservation.reservations.filter(el => el.id !== action.payload.reservation.id)
-      }
+      const dateReservations = state.clientReservations.find(res => res.date === action.payload.date)
+      const reservations = dateReservations.reservations.filter(res => res.id !== action.payload.reservation.id)
+      dateReservations.reservations = reservations
     },
     updateReservation: (state, action) => {
-      // const reservation = state.clientReservations.find(res => res.date === action.payload.date)
-      // if (reservation) {
-      //   reservation = action.payload.reservation
-      // }
+      const dateReservations = state.clientReservations.find(res => res.date === action.payload.date)
+      dateReservations.reservations = dateReservations.reservations.map(res => ({
+        ...res,
+        ...(res.id === action.payload.reservation.id && action.payload.reservation)
+      }))
+    },
+    setSelectedReservation: (state, action) => {
+      state.selectedReservation = action.payload
+    },
 
-      console.log('updateReservation action.payload = ', action.payload)
+    setActiveCalendarDay: (state, action) => {
+      state.activeCalendarDay = action.payload
     }
   },
   extraReducers: {
