@@ -29,12 +29,8 @@ export const SelectSimple = ({ data, setData, setSelectedTime }) => {
       value={data && data[selectedIndex - 1]}
       selectedIndex={selectedIndex}
       onSelect={index => {
-        console.log('index', index)
         setSelectedIndex(index)
-
-        if (data) {
-          setSelectedTime(data[index - 1])
-        }
+        setSelectedTime(data[index - 1])
       }}
     >
       {data?.map((item, id) => {

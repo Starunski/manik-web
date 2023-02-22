@@ -1,24 +1,24 @@
 import React, { useState } from 'react'
 import { StyleSheet, View } from 'react-native'
 import { Button, Card, Modal, Text, Input } from '@ui-kitten/components'
-import { SelectSimple } from '../../components/SelectSimple'
-import { userSlice } from '../../store/reducers/userSlice'
-import { useAppDispatch } from '../../hooks/redux'
-import { useAppSelector } from '../../hooks/redux'
+import { SelectSimple } from './SelectSimple'
+import { userSlice } from '../store/reducers/userSlice'
+import { useAppDispatch } from '../hooks/redux'
+import { useAppSelector } from '../hooks/redux'
 
 export const ManageReservationModal = ({ onClose }) => {
   const dispatch = useAppDispatch()
   const selectedReservation = useAppSelector(state => state.userReducer.selectedReservation)
   const activeCalendarDay = useAppSelector(state => state.userReducer.activeCalendarDay)
 
-  const [selectedTime, setSelectedTime] = useState(selectedReservation.time)
-  const [ailableTime, setAvailableTime] = useState(['9:00', '12:00', '15:00', "17:'00"])
+  const [availableTime, setAvailableTime] = useState(['9:00', '12:00', '15:00', "17:'00"])
+  const [selectedTime, setSelectedTime] = useState('')
+
   const [name, setName] = useState('')
 
   const onAddReservation = () => {
     const { addReservation } = userSlice.actions
     if (activeCalendarDay && selectedTime && name) {
-
       const dateReservation = {
         date: activeCalendarDay,
         reservation: { id: new Date().valueOf(), time: selectedTime, name }
@@ -45,7 +45,7 @@ export const ManageReservationModal = ({ onClose }) => {
       <Modal visible={true} backdropStyle={styles.backdrop} onBackdropPress={onClose}>
         <Card disabled={true}>
           <Text>Add free time to your schedule 😻</Text>
-          <SelectSimple data={ailableTime} setData={setAvailableTime} setSelectedTime={setSelectedTime} />
+          <SelectSimple data={availableTime} setSelectedTime={setSelectedTime} />
           <Input
             style={styles.input}
             placeholder="Client name"

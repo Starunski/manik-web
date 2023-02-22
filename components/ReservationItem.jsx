@@ -20,10 +20,11 @@ export const ReservationItem = ({ reservation, isFirst, onEdit }) => {
 
   return (
     <TouchableOpacity
+      key={reservation?.id}
       style={[styles.item, { height: reservation?.height }]}
       onLongPress={() => alert(`some info ${reservation.name} ? `)}
     >
-      <Text style={{ fontSize, color }}>
+      <Text style={{ fontSize, color }} >
         {reservation.name} {reservation.time}
       </Text>
       <View style={{ flexDirection: 'row', justifyContent: 'flex-end' }}>

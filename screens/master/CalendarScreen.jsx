@@ -1,8 +1,8 @@
 import { Button, StyleSheet, Text, View, SafeAreaView, TouchableOpacity } from 'react-native'
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 // import { zonedTimeToUtc } from 'date-fns-tz'
 import { useAppDispatch } from '../../hooks/redux'
-import { ManageReservationModal } from './Modal.jsx'
+import { ManageReservationModal } from '../../components/ManageReservationModal.jsx'
 import { KittenCalendar } from '../../components/KittenCalendar'
 import { useReservation } from '../../hooks/useReservation'
 import { userSlice } from '../../store/reducers/userSlice'
@@ -12,12 +12,17 @@ export const CalendarScreen = props => {
   const dispatch = useAppDispatch()
   const { filteredReservationByDay } = useReservation()
   const [showModal, setShowModal] = useState(false)
+  const { setSelectedReservation, setActiveCalendarDay } = userSlice.actions
 
   const onOpenEditModal = reservation => {
-    const { setSelectedReservation } = userSlice.actions
     dispatch(setSelectedReservation({ date: filteredReservationByDay.date, reservation }))
     setShowModal(true)
   }
+
+  useEffect(() => {
+    console.log('new Date().toLocaleDateString =-=-=-', new Date().toLocaleDateString('eu-EU'))
+    dispatch(setActiveCalendarDay(new Date().toLocaleDateString('eu-EU')))
+  }, [])
 
   return (
     <SafeAreaView style={styles.container}>
