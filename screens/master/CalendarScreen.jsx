@@ -12,6 +12,7 @@ export const CalendarScreen = props => {
   const dispatch = useAppDispatch()
   const { filteredReservationByDay } = useReservation()
   const [showModal, setShowModal] = useState(false)
+
   const [variant, setVariant] = useState('add')
   const { setSelectedReservation, setActiveCalendarDay } = userSlice.actions
 
@@ -46,7 +47,7 @@ export const CalendarScreen = props => {
           <ReservationItem reservation={reservation} isFirst={idx === 0} onEdit={onOpenEditModal} />
         ))}
       </View>
-      {showModal && <ManageReservationModal onClose={() => setShowModal(false)} variant={variant} />}
+      {showModal && <ManageReservationModal onClose={() => setShowModal(false)} variant={'add'} />}
     </SafeAreaView>
   )
 }

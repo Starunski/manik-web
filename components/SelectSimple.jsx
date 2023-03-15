@@ -2,26 +2,8 @@ import React, { useState, useEffect } from 'react'
 import { StyleSheet } from 'react-native'
 import { IndexPath, Layout, Select, SelectItem } from '@ui-kitten/components'
 
-export const SelectSimple = ({ data, setData, setSelectedTime }) => {
+export const SelectSimple = ({ data, setSelectedTime }) => {
   const [selectedIndex, setSelectedIndex] = useState()
-
-  // const getMasters = async () => {
-  //   try {
-  //     const res = await fetch('http://localhost:5000/api')
-  //     const data = await res.json()
-  //     if (data) {
-  //       // alert(data.users);
-  //       setData(data.users)
-  //     }
-  //   } catch (error) {
-  //     // alert("ERROR", error.message);
-  //     console.log('ERROR', error.message)
-  //   }
-  // }
-
-  // useEffect(() => {
-  //   getMasters()
-  // }, [])
 
   return (
     <Select

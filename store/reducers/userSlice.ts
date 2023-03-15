@@ -11,6 +11,7 @@ interface UserState {
   selectedReservation: null
   activeCalendarDay: string
   clientReservations: any[]
+  clientList: any[]
 }
 
 const initialState: UserState = {
@@ -35,6 +36,23 @@ const initialState: UserState = {
         { id: '4', name: 'Nastia', time: '09 00' },
         { id: '3', name: 'Katia', time: '21 00' }
       ]
+    }
+  ],
+  clientList: [
+    {
+      id: '1',
+      title: 'Title for Item',
+      description: 'Description for Item'
+    },
+    {
+      id: '2',
+      title: 'Title for Item',
+      description: 'Description for Item'
+    },
+    {
+      id: '3',
+      title: 'Title for Item',
+      description: 'Description for Item'
     }
   ]
   // '2023-02-23': [{ name: 'item 2 - any js object', height: 80 }]
@@ -73,6 +91,25 @@ export const userSlice = createSlice({
         ...(res.id === action.payload.reservation.id && action.payload.reservation)
       }))
     },
+
+    addClient: (state, action) => {
+      console.log('action.payload', action.payload)
+      state.clientList.push(action.payload)
+    },
+
+    deleteClient: (state, action) => {
+      console.log('action.payload deleteClient', action.payload)
+      state.clientList = state.clientList.filter(item => item.id !== action.payload)
+    },
+    updateClient: (state, action) => {
+      console.log('action.payload', action.payload)
+      const client = state.clientList.find(res => res.id === action.payload.id)
+      state.clientList = state.clientList.map(res => ({
+        ...res,
+        ...(res.id === action.payload.id && action.payload)
+      }))
+    },
+
     setSelectedReservation: (state, action) => {
       state.selectedReservation = action.payload
     },
