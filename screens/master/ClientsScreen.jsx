@@ -13,8 +13,8 @@ export const ClientsScreen = props => {
   const [showDetailModal, setShowDetailModal] = useState(false)
   const [selectedClient, setSelectedClient] = useState()
   const clientList = useAppSelector(state => state.userReducer.clientList)
-  const dispatch = useAppDispatch()
-  const { addClient, updateClient, deleteClient } = userSlice.actions
+  console.log(clientList)
+
   const onShowDetail = id => {
     setShowDetailModal(true)
     clientList?.find((item, idx) => {

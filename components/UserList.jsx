@@ -4,7 +4,7 @@ import { StyleSheet } from 'react-native'
 import Ionicons from '@expo/vector-icons/Ionicons'
 
 export const UserList = ({ buttonName, data, onPress }) => {
-  const renderItemAccessory = ({ idx }) => (
+  const renderItemAccessory = idx => (
     <Button onPress={() => onPress(idx)} size="tiny">
       {buttonName ?? '+'}
     </Button>

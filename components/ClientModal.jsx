@@ -31,14 +31,12 @@ export const ClientModal = ({ onClose, variant, data }) => {
   const onUpdateClientFromList = () => {
     const { updateClient } = userSlice.actions
 
-    if (name && phone) {
-      const dataToSend = {
-        id: data?.id,
-        title: name,
-        description: phone
-      }
-      dispatch(updateClient(dataToSend))
+    const dataToSend = {
+      id: data?.id,
+      title: name,
+      description: phone
     }
+    dispatch(updateClient(dataToSend))
 
     onClose()
   }
